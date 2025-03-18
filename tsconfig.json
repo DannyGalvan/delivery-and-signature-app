@@ -1,3 +1,34 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json"
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "include": ["src/**/*","nativewind-env.d.ts"],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "typeRoots": ["./node_modules/@types", "./nativewind-env.d.ts", "./src/types"],
+    "paths": {
+      "@icons/*": ["./src/assets/icon/*"],
+      "@images/*": ["./src/assets/images/*"],
+      "@components/*": ["./src/components/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@services/*": ["./src/services/*"],
+      "@config/*": ["./src/config/*"],
+      "@stores/*": ["./src/stores/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@navigations/*": ["./src/navigators/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@app-types/*": ["./src/types/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@validations/*": ["./src/validations/*"],
+      "@database/*": ["./src/database/*"],
+      "@models/*": ["./src/database/models/*"],
+      "@repositories/*": ["./src/database/repository/*"],
+      "@observables/*": ["./src/observables/*"],
+      "@containers/*": ["./src/containers/*"],
+    },
+    "strict": false,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true
+  }
 }
