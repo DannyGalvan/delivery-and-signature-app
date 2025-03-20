@@ -15,7 +15,7 @@ function App(): React.JSX.Element {
   return (
     <QueryClientProvider client={client}>
       <NavigationContainer>
-        {isLoading || loadDataSource ? (
+        {loadDataSource || isLoading ? (
           <LoadingScreen title="Cargando Porfavor Espere..." />
         ) : (
           <PrincipalStack />

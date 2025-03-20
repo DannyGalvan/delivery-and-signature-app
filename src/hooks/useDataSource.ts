@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@hooks/useAuth';
 import { dataSource } from '@database/dataSource';
+import { useOrderPersistStore } from '@stores/useOrderPersistStore';
+import { usePersistOrders } from './usePersistOrders';
 
 export const useDataSource = () => {
   const [loadDataSource, setLoadDataSource] = useState(false);
-  const { initializeAuth, isLoading } = useAuth();
+  const { isLoggedIn, initializeAuth, isLoading } = useAuth();
+  const { updateOrders } = usePersistOrders();
 
   useEffect(() => {
     const connect = async () => {
@@ -14,6 +17,12 @@ export const useDataSource = () => {
           await dataSource.initialize();
           await initializeAuth();
         }
+
+        if (!isLoggedIn) {
+          return;
+        }
+
+        await updateOrders();
       } catch (error) {
         console.log('error', error);
       }
@@ -21,7 +30,7 @@ export const useDataSource = () => {
     };
 
     connect();
-  }, [isLoading]);
+  }, [isLoading, isLoggedIn]);
 
   return { loadDataSource, isLoading };
 };

@@ -3,7 +3,13 @@ import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import SignatureCapture from 'react-native-signature-capture';
 import { appColors } from '@styles/appColors';
 
-export const SignatureCaptureImage = () => {
+interface SignatureCaptureImageProps {
+  onSave: (result: any) => void;
+}
+
+export const SignatureCaptureImage = ({
+  onSave,
+}: SignatureCaptureImageProps) => {
   const signRef = useRef(null);
 
   const saveSign = () => {
@@ -18,8 +24,8 @@ export const SignatureCaptureImage = () => {
     }
   };
 
-  const onSaveEvent = (result) => {
-    console.log('Signature saved:', result);
+  const onSaveEvent = (result: any) => {
+    onSave(result);
   };
 
   const onDragEvent = () => {

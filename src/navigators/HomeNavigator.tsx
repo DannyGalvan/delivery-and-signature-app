@@ -3,7 +3,8 @@ import React from 'react';
 import { Dashboard } from '@screens/menu/DashboardScreen';
 import { HomeStackParamList } from '@app-types/navigators/IHomeNavigator';
 import { PaymentScreen } from '@screens/menu/PaymentScreen';
-import { ReceiptScreen } from '@screens/menu/ReceiptScreen';
+import { ReceiptScreen } from '@screens/receipt/ReceiptScreen';
+import { ReceiptNavigator } from './ReceiptNavigator';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -16,7 +17,7 @@ export const HomeNavigator = () => {
     >
       <Stack.Screen name="Apps" component={Dashboard} />
       <Stack.Screen name="Payment" component={PaymentScreen} />
-      <Stack.Screen name="Receipt" component={ReceiptScreen} />
+      <Stack.Screen name="Receipt" component={ReceiptNavigator} />
     </Stack.Navigator>
   );
 };
