@@ -1,4 +1,14 @@
-export const URL_BASE = 'http://52.14.32.48:81/api/v1';
+const URL_BASE = 'http://52.14.32.48:81';
+
+export const URL_RESOURCES = {
+  API: `${URL_BASE}/api/v1`,
+  AUTH: 'auth',
+  RECOVERY_PASSWORD: 'auth/RecoveryPassword',
+  CHANGE_PASSWORD: 'auth/ChangePassword',
+  ORDER: 'Order',
+  SIGNATURE: 'signature',
+  SIGNATURES_IMAGES: `${URL_BASE}/signatures`,
+};
 
 export const NAME_BD = 'quick-sqlite.db';
 

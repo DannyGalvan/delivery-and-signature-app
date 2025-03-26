@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 import { ForbiddenError, UnauthorizedError } from '@app-types/errors/Errors';
-import { URL_BASE } from '@config/constants';
+import { URL_RESOURCES } from '@config/constants';
 
 export const deliveryApi = axios.create({
-  baseURL: URL_BASE,
+  baseURL: URL_RESOURCES.API,
   headers: {
     'Content-Type': 'application/json',
   },

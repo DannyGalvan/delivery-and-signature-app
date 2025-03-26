@@ -7,6 +7,8 @@ export class Signature {
   @Column('int')
   orderId: number;
   @Column('int')
+  routeId: number;
+  @Column('int')
   state: number;
   @Column('varchar')
   signature: string;
