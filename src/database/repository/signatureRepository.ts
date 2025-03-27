@@ -1,6 +1,8 @@
 import { ApiResponse } from '@app-types/common/ApiResponse';
 import { dataSource } from '@database/dataSource';
 import { Signature } from '@database/models/Signature';
+import { saveSignature } from '@services/signatureService';
+import { ToastAndroid } from 'react-native';
 
 export const signatureRepository = dataSource.getRepository(Signature);
 
@@ -73,5 +75,44 @@ export const deleteSignature = async (orderId: number) => {
   } catch (error) {
     response.message = `Error al eliminar la firma, ${error}`;
     return response;
+  }
+};
+
+export const sendSignaturesToServer = async (): Promise<void> => {
+  try {
+    const signatures = await signatureRepository.find({
+      order: { id: 'DESC' },
+    });
+
+    if (signatures.length === 0) {
+      return;
+    }
+
+    signatures.map((s) => (s.id = undefined));
+
+    for (const signature of signatures) {
+      const result = await saveSignature(signature);
+
+      console.log('Result', result);
+
+      if (!result.success) {
+        return;
+      }
+
+      await signatureRepository.delete({
+        orderId: signature.orderId,
+        routeId: signature.routeId,
+      });
+    }
+
+    ToastAndroid.show(
+      'Firmas enviadas en segundo plano correctamente',
+      ToastAndroid.SHORT,
+    );
+  } catch (error) {
+    ToastAndroid.show(
+      `Error al enviar las firmas en segundo plano al servidor, ${error}`,
+      ToastAndroid.SHORT,
+    );
   }
 };

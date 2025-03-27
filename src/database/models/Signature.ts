@@ -6,7 +6,7 @@ export class Signature {
   id?: number;
   @Column('int')
   orderId: number;
-  @Column('int')
+  @Column('int', { default: 0 })
   routeId: number;
   @Column('int')
   state: number;

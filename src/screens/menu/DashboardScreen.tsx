@@ -3,25 +3,26 @@ import { getAllSignatures } from '@database/repository/signatureRepository';
 import { useFocusEffect } from '@react-navigation/native';
 import { LoadingScreen } from '@screens/LoadingScreen';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FlatList, Image, ToastAndroid, View } from 'react-native';
+import { Text } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const Dashboard = () => {
   const { data, isLoading, refetch, isFetching } = useQuery({
-    queryKey: ['dashboard'],
+    queryKey: ['signatures'],
     queryFn: getAllSignatures,
   });
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       refetch();
     }, []),
   );
 
   return (
     <SafeAreaView className="flex-1 bg-zinc-100 mt-2">
-      <Title text="Firmas guardadas" />
+      <Title text="Firmas pendientes" />
       {isLoading ? (
         <LoadingScreen title="Espere porfavor" />
       ) : (
@@ -44,6 +45,13 @@ export const Dashboard = () => {
                 />
               </View>
             )}
+            ListEmptyComponent={
+              <View className="flex-1 items-center justify-center h-full">
+                <Text className="text-red-500 font-bold">
+                  No hay firmas pendientes
+                </Text>
+              </View>
+            }
           />
         </View>
       )}

@@ -8,19 +8,25 @@ import { useDataSource } from './src/hooks/useDataSource';
 
 const client = new QueryClient();
 
-function App(): React.JSX.Element {
+function Wrap(): React.JSX.Element {
   useNetworkListener();
   const { loadDataSource, isLoading } = useDataSource();
 
   return (
+    <NavigationContainer>
+      {loadDataSource || isLoading ? (
+        <LoadingScreen title="Cargando Porfavor Espere..." />
+      ) : (
+        <PrincipalStack />
+      )}
+    </NavigationContainer>
+  );
+}
+
+function App(): React.JSX.Element {
+  return (
     <QueryClientProvider client={client}>
-      <NavigationContainer>
-        {loadDataSource || isLoading ? (
-          <LoadingScreen title="Cargando Porfavor Espere..." />
-        ) : (
-          <PrincipalStack />
-        )}
-      </NavigationContainer>
+      <Wrap />
     </QueryClientProvider>
   );
 }

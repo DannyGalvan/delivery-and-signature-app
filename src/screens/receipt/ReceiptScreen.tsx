@@ -32,6 +32,8 @@ export const ReceiptScreen = () => {
                 navigate('createReceipt', {
                   orderId: item.orderId,
                   state: item.state,
+                  routeId: item.routeId,
+                  order: JSON.stringify(item),
                 })
               }
             >

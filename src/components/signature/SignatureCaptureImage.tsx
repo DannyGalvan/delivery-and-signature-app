@@ -1,14 +1,19 @@
 import React, { useRef } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import SignatureCapture from 'react-native-signature-capture';
 import { appColors } from '@styles/appColors';
+import { TouchableButton } from '@components/button/TouchableButton';
+import { Title } from '@components/pure/Title';
+import { StyleProp } from 'react-native';
 
 interface SignatureCaptureImageProps {
   onSave: (result: any) => void;
+  styles: StyleProp<ViewStyle>;
 }
 
 export const SignatureCaptureImage = ({
   onSave,
+  styles: styledSignature,
 }: SignatureCaptureImageProps) => {
   const signRef = useRef(null);
 
@@ -33,9 +38,9 @@ export const SignatureCaptureImage = ({
   };
 
   return (
-    <View style={{ flex: 1, flexDirection: 'column' }}>
-      <Text style={styles.title}>Firma de Recibido</Text>
-      <View style={styles.container}>
+    <View style={{ flexDirection: 'column' }}>
+      <Title text="Firma" />
+      <View style={[styles.container, styledSignature]}>
         <SignatureCapture
           style={styles.signature}
           ref={signRef}
@@ -51,14 +56,18 @@ export const SignatureCaptureImage = ({
           viewMode="portrait"
         />
       </View>
-      <View style={{ flex: 1, flexDirection: 'row' }}>
-        <TouchableHighlight style={styles.buttonStyle} onPress={saveSign}>
-          <Text>Guardar</Text>
-        </TouchableHighlight>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+        <TouchableButton
+          title="Guardar"
+          textClassName="bg-cyan-400 p-4 text-white rounded-lg"
+          onPress={saveSign}
+        />
 
-        <TouchableHighlight style={styles.buttonStyle} onPress={resetSign}>
-          <Text>Limpiar</Text>
-        </TouchableHighlight>
+        <TouchableButton
+          title="Limpiar"
+          textClassName="bg-cyan-400 p-4 text-white rounded-lg"
+          onPress={resetSign}
+        />
       </View>
     </View>
   );
@@ -69,29 +78,12 @@ const styles = StyleSheet.create({
     borderBlockColor: appColors.gray,
     borderWidth: 2,
     margin: 10,
-    height: '50%',
-  },
-  title: {
-    textAlign: 'center',
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginVertical: 10,
-    color: appColors.black,
   },
   signature: {
+    flex: 1,
     padding: 10,
-    width: '100%',
-    height: '100%',
     borderWidth: 1,
     borderColor: appColors.gray,
     backgroundColor: appColors.white,
-  },
-  buttonStyle: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 50,
-    backgroundColor: appColors.primary,
-    margin: 10,
   },
 });

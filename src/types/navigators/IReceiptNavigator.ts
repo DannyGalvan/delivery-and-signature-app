@@ -3,7 +3,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 export type ReceiptStackParamList = {
   list: undefined;
-  createReceipt: { orderId: number; state: number };
+  createReceipt: {
+    orderId: number;
+    state: number;
+    routeId: number;
+    order: string;
+  };
 };
 
 export type CreateReceiptRouteProps = RouteProp<

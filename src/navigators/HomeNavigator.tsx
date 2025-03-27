@@ -3,7 +3,6 @@ import React from 'react';
 import { Dashboard } from '@screens/menu/DashboardScreen';
 import { HomeStackParamList } from '@app-types/navigators/IHomeNavigator';
 import { PaymentScreen } from '@screens/menu/PaymentScreen';
-import { ReceiptScreen } from '@screens/receipt/ReceiptScreen';
 import { ReceiptNavigator } from './ReceiptNavigator';
 
 const Stack = createStackNavigator<HomeStackParamList>();
