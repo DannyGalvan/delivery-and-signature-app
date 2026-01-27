@@ -27,6 +27,7 @@ export const PrincipalStack = () => {
   if (error) {
     return (
       <Drawer.Navigator
+        id="principalNavigator"
         screenOptions={{
           headerShown: false,
         }}
@@ -38,6 +39,7 @@ export const PrincipalStack = () => {
 
   return (
     <Drawer.Navigator
+      id="principalNavigator"
       drawerContent={DeliveryDrawer}
       screenOptions={{
         headerShown: isLoggedIn,

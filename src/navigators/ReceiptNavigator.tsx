@@ -9,6 +9,7 @@ const Stack = createStackNavigator<ReceiptStackParamList>();
 export const ReceiptNavigator = () => {
   return (
     <Stack.Navigator
+      id="ReceiptNavigator"
       screenOptions={{
         headerShown: false,
       }}

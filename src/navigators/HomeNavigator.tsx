@@ -10,6 +10,7 @@ const Stack = createStackNavigator<HomeStackParamList>();
 export const HomeNavigator = () => {
   return (
     <Stack.Navigator
+      id="HomeNavigator"
       screenOptions={{
         headerShown: false,
       }}
