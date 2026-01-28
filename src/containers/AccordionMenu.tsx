@@ -4,7 +4,7 @@ import Accordion from 'react-native-collapsible/Accordion';
 import { Text } from 'react-native-gesture-handler';
 import { useAuth } from '@hooks/useAuth';
 import { Authorizations } from '@app-types/rol/Authorizations';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { RouteNavigations } from '@app-types/common/RouteNavigations';
 import { appColors } from '@styles/appColors';
@@ -14,31 +14,31 @@ export const AccordionMenu = () => {
   const [sections, setSections] = useState([]);
   const { navigate } = useNavigation<RouteNavigations>();
 
-  const getItemActive = (sections) => {
+  const getItemActive = sections => {
     return sections !== undefined && sections.length > 0
       ? operations[sections[0]]
       : null;
   };
 
-  const updateSections = (activeSections) => {
+  const updateSections = activeSections => {
     setSections(activeSections);
   };
 
   const renderHeader = (section: Authorizations) => {
     const item = getItemActive(sections);
-    return section.operations.some((operation) => operation.isVisible) ? (
+    return section.operations.some(operation => operation.isVisible) ? (
       <View
         className={`${
           item?.module.id == section.module.id ? 'bg-sky-200' : 'bg-blue-100'
         } py-3 px-2 flex flex-row justify-between items-center`}
       >
-        <Icon
+        <Ionicons
           name={section.module.image}
           size={20}
           color={appColors.itemMenuText}
         />
         <Text className="text-blue-500 font-bold">{section.module.name}</Text>
-        <Icon
+        <Ionicons
           name={
             item?.module.id == section.module.id ? 'chevron-up' : 'chevron-down'
           }
@@ -54,13 +54,13 @@ export const AccordionMenu = () => {
   const renderContent = (section: Authorizations) => {
     return (
       <View className="bg-gray-100 py-3 px-2">
-        {section.operations.map((operation) => (
+        {section.operations.map(operation => (
           <TouchableOpacity
             key={operation.id}
             className="py-2 flex flex-row"
             onPress={() => navigate(operation.path)}
           >
-            <Icon
+            <Ionicons
               name={operation.icon}
               size={20}
               color="black"

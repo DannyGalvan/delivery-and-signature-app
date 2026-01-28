@@ -4,7 +4,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import { StyleSheet, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
 import { useAuth } from '@hooks/useAuth';
 import { Logo } from '@components/Icons/Logo';
 import { appColors } from '@styles/appColors';
@@ -25,7 +25,7 @@ export const DeliveryDrawer = (props: DrawerContentComponentProps) => {
         label="Inicio"
         onPress={() => navigate('Apps')}
         icon={({ color, size }) => (
-          <Icon name={'home'} size={size} color={color} />
+          <Ionicons name="home" size={size} color={color} />
         )}
         inactiveBackgroundColor={appColors.itemMenu}
         activeBackgroundColor={appColors.gray}
@@ -36,7 +36,7 @@ export const DeliveryDrawer = (props: DrawerContentComponentProps) => {
         label="Cerrar Sesión"
         onPress={logout}
         icon={({ color, size }) => (
-          <Icon name={'power'} size={size} color={color} />
+          <Ionicons name="power" size={size} color={color} />
         )}
         inactiveBackgroundColor={appColors.danger}
         activeBackgroundColor={appColors.warning}

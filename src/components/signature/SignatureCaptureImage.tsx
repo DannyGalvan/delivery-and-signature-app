@@ -1,10 +1,9 @@
 import React, { useRef } from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
-import SignatureCapture from 'react-native-signature-capture';
+import { StyleSheet, View, ViewStyle, StyleProp } from 'react-native';
+import SignatureScreen from 'react-native-signature-canvas';
 import { appColors } from '@styles/appColors';
 import { TouchableButton } from '@components/button/TouchableButton';
 import { Title } from '@components/pure/Title';
-import { StyleProp } from 'react-native';
 
 interface SignatureCaptureImageProps {
   onSave: (result: any) => void;
@@ -15,48 +14,75 @@ export const SignatureCaptureImage = ({
   onSave,
   styles: styledSignature,
 }: SignatureCaptureImageProps) => {
-  const signRef = useRef(null);
+  const signRef = useRef<any>(null);
 
   const saveSign = () => {
     if (signRef.current) {
-      signRef.current.saveImage();
+      signRef.current.readSignature();
     }
   };
 
   const resetSign = () => {
     if (signRef.current) {
-      signRef.current.resetImage();
+      signRef.current.clearSignature();
     }
   };
 
-  const onSaveEvent = (result: any) => {
-    onSave(result);
+  const handleSignature = (signature: string) => {
+    // La librería devuelve la firma en base64 directamente
+    onSave({ encoded: signature });
   };
 
-  const onDragEvent = () => {
-    console.log('User is drawing');
+  const handleEmpty = () => {
+    console.log('La firma está vacía');
   };
 
   return (
-    <View style={{ flexDirection: 'column' }}>
+    <View style={{ flexDirection: 'column', flex: 1 }}>
       <Title text="Firma" />
       <View style={[styles.container, styledSignature]}>
-        <SignatureCapture
-          style={styles.signature}
+        <SignatureScreen
           ref={signRef}
-          onSaveEvent={onSaveEvent}
-          onDragEvent={onDragEvent}
-          saveImageFileInExtStorage={false}
-          showNativeButtons={false}
-          showTitleLabel={false}
-          backgroundColor={appColors.white}
-          strokeColor={appColors.black}
-          minStrokeWidth={4}
-          maxStrokeWidth={4}
-          viewMode="portrait"
+          onOK={handleSignature}
+          onEmpty={handleEmpty}
+          descriptionText=""
+          clearText="Limpiar"
+          confirmText="Guardar"
+          webStyle={`
+            .m-signature-pad {
+              box-shadow: none;
+              border: none;
+              margin: 0;
+            }
+            .m-signature-pad--body {
+              border: none;
+              background-color: ${appColors.white};
+            }
+            .m-signature-pad--footer {
+              display: none;
+            }
+            body,html {
+              width: 100%;
+              height: 100%;
+              margin: 0;
+              padding: 0;
+            }
+            canvas {
+              background-color: ${appColors.white};
+            }
+          `}
+          penColor={appColors.black}
+          minWidth={2}
+          maxWidth={4}
         />
       </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          marginTop: 10,
+        }}
+      >
         <TouchableButton
           title="Guardar"
           textClassName="bg-cyan-400 p-4 text-white rounded-lg"
@@ -75,15 +101,10 @@ export const SignatureCaptureImage = ({
 
 const styles = StyleSheet.create({
   container: {
-    borderBlockColor: appColors.gray,
+    borderColor: appColors.gray,
     borderWidth: 2,
     margin: 10,
-  },
-  signature: {
-    flex: 1,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: appColors.gray,
-    backgroundColor: appColors.white,
+    height: 200,
+    overflow: 'hidden',
   },
 });

@@ -1,5 +1,6 @@
-import { RouteNavigations, RoutesValues } from '../common/RouteNavigations';
+import { RoutesValues } from '../common/RouteNavigations';
 import { Module } from './Module';
+import { IoniconsIconName } from '@react-native-vector-icons/ionicons';
 
 export interface Operation {
   id: number;
@@ -7,7 +8,7 @@ export interface Operation {
   name: string;
   description: string;
   policy: string;
-  icon: string;
+  icon: IoniconsIconName;
   path: RoutesValues;
   moduleId: number;
   state: number;

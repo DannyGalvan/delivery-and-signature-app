@@ -106,7 +106,7 @@ export const CreateReceiptScreen = ({
               height: 200,
               width: 300,
             }}
-            onSave={(result) => handleSignature(result)}
+            onSave={result => handleSignature(result)}
           />
           <TouchableButton
             title="Cerrar"

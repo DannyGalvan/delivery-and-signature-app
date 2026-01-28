@@ -6,10 +6,13 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  Ionicons,
+  IoniconsIconName,
+} from '@react-native-vector-icons/ionicons';
 
 interface Props {
-  iconName: string;
+  iconName: IoniconsIconName;
   onPress: () => void;
   style?: StyleProp<ViewStyle>;
   isLoading?: boolean;
@@ -23,7 +26,7 @@ export const Fab = ({ iconName, onPress, style, isLoading }: Props) => {
       style={[styles.blackButton, style]}
     >
       {!isLoading ? (
-        <Icon name={iconName} size={35} color="white" />
+        <Ionicons name={iconName} size={35} color="white" />
       ) : (
         <ActivityIndicator color="white" size={30} />
       )}

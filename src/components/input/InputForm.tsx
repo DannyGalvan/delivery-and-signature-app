@@ -4,6 +4,7 @@ import { appStyles } from '../../styles/appStyles';
 import { appColors } from '../../styles/appColors';
 import { TouchableButton } from '../button/TouchableButton';
 import { useToggle } from '../../hooks/useToggle';
+import { IoniconsIconName } from '@react-native-vector-icons/ionicons';
 
 interface Props {
   label: string;
@@ -22,7 +23,7 @@ interface Props {
   keyboardType?: KeyboardType;
   style?: any;
   readonly?: boolean;
-  icon?: string;
+  icon?: IoniconsIconName;
   iconColor?: string;
 }
 
@@ -60,7 +61,7 @@ export const InputForm = ({
             style,
           ]}
           placeholder={placeholder}
-          onChangeText={(text) => onChangeText(text, name)}
+          onChangeText={text => onChangeText(text, name)}
           value={value}
           placeholderTextColor={placeholderTextColor ?? appColors.opacity}
           secureTextEntry={secureTextEntry && !isToggled}

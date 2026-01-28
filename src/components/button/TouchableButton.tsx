@@ -6,7 +6,10 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  Ionicons,
+  IoniconsIconName,
+} from '@react-native-vector-icons/ionicons';
 
 interface Props {
   styles?: StyleProp<ViewStyle>;
@@ -16,7 +19,7 @@ interface Props {
   onPress: () => void;
   title?: string;
   iconColor?: string;
-  icon?: string;
+  icon?: IoniconsIconName;
   iconSize?: number;
 }
 
@@ -43,7 +46,7 @@ export const TouchableButton = ({
           {title}
         </Text>
       )}
-      {icon && <Icon name={icon} size={iconSize ?? 30} color={iconColor} />}
+      {icon && <Ionicons name={icon} size={iconSize ?? 30} color={iconColor} />}
     </TouchableOpacity>
   );
 };

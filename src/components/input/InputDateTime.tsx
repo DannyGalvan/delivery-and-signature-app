@@ -4,6 +4,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useToggle } from '@hooks/useToggle';
 import { TouchableButton } from '@components/button/TouchableButton';
 import { appColors } from '@styles/appColors';
+import { IoniconsIconName } from '@react-native-vector-icons/ionicons';
 
 interface InputDateTimeProps {
   name: string;
@@ -11,7 +12,7 @@ interface InputDateTimeProps {
   onChange: (text: string, name: string) => void;
   parsedFn: (date: Date) => string;
   value: string;
-  icon: string;
+  icon: IoniconsIconName;
   errorMessage: string;
   mode?: 'date' | 'time' | 'datetime';
 }
@@ -47,7 +48,7 @@ export const InputDateTime = ({
       <DateTimePickerModal
         isVisible={isDateToggle}
         mode={mode}
-        onConfirm={(date) => {
+        onConfirm={date => {
           const parsed = parsedFn(date);
           onChange(name, parsed);
           dateToggle();
