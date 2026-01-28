@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { StyleSheet, View, ViewStyle, StyleProp } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { StyleSheet, View, ViewStyle, StyleProp, Image } from 'react-native';
 import SignatureScreen from 'react-native-signature-canvas';
 import { appColors } from '@styles/appColors';
 import { TouchableButton } from '@components/button/TouchableButton';
@@ -14,66 +14,66 @@ export const SignatureCaptureImage = ({
   onSave,
   styles: styledSignature,
 }: SignatureCaptureImageProps) => {
-  const signRef = useRef<any>(null);
+  const [signature, setSignature] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const ref = useRef<any>(null);
 
-  const saveSign = () => {
-    if (signRef.current) {
-      signRef.current.readSignature();
-    }
-  };
-
-  const resetSign = () => {
-    if (signRef.current) {
-      signRef.current.clearSignature();
-    }
-  };
-
-  const handleSignature = (signature: string) => {
-    // La librería devuelve la firma en base64 directamente
-    onSave({ encoded: signature });
+  const handleSignature = signature => {
+    console.log('Signature captured:', signature);
+    setSignature(signature);
+    setIsLoading(false);
   };
 
   const handleEmpty = () => {
-    console.log('La firma está vacía');
+    console.log('Signature is empty');
+    setIsLoading(false);
+  };
+
+  const handleClear = () => {
+    console.log('Signature cleared');
+    setSignature(null);
+  };
+
+  const handleError = error => {
+    console.error('Signature pad error:', error);
+    setIsLoading(false);
+  };
+
+  const handleEnd = () => {
+    setIsLoading(true);
+    ref.current?.readSignature();
   };
 
   return (
     <View style={{ flexDirection: 'column', flex: 1 }}>
       <Title text="Firma" />
+      <View style={styles.preview}>
+        {signature && (
+          <Image
+            resizeMode="contain"
+            style={{ width: 335, height: 114 }}
+            source={{ uri: signature }}
+          />
+        )}
+      </View>
       <View style={[styles.container, styledSignature]}>
         <SignatureScreen
-          ref={signRef}
+          ref={ref}
+          onEnd={handleEnd}
           onOK={handleSignature}
           onEmpty={handleEmpty}
-          descriptionText=""
-          clearText="Limpiar"
-          confirmText="Guardar"
-          webStyle={`
-            .m-signature-pad {
-              box-shadow: none;
-              border: none;
-              margin: 0;
-            }
-            .m-signature-pad--body {
-              border: none;
-              background-color: ${appColors.white};
-            }
-            .m-signature-pad--footer {
-              display: none;
-            }
-            body,html {
-              width: 100%;
-              height: 100%;
-              margin: 0;
-              padding: 0;
-            }
-            canvas {
-              background-color: ${appColors.white};
-            }
-          `}
-          penColor={appColors.black}
-          minWidth={2}
-          maxWidth={4}
+          onClear={handleClear}
+          onError={handleError}
+          autoClear={true}
+          descriptionText="Sign here"
+          clearText="Clear"
+          confirmText={isLoading ? 'Processing...' : 'Save'}
+          penColor="#000000"
+          backgroundColor="rgba(255,255,255,0)"
+          webviewProps={{
+            cacheEnabled: false,
+            androidLayerType: 'hardware',
+          }}
         />
       </View>
       <View
@@ -86,13 +86,13 @@ export const SignatureCaptureImage = ({
         <TouchableButton
           title="Guardar"
           textClassName="bg-cyan-400 p-4 text-white rounded-lg"
-          onPress={saveSign}
+          onPress={() => onSave({ encoded: signature })}
         />
 
         <TouchableButton
           title="Limpiar"
           textClassName="bg-cyan-400 p-4 text-white rounded-lg"
-          onPress={resetSign}
+          onPress={() => setSignature(null)}
         />
       </View>
     </View>
@@ -106,5 +106,13 @@ const styles = StyleSheet.create({
     margin: 10,
     height: 200,
     overflow: 'hidden',
+  },
+  preview: {
+    width: 335,
+    height: 114,
+    backgroundColor: '#F8F8F8',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 15,
   },
 });

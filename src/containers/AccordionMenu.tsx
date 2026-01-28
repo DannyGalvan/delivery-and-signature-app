@@ -58,7 +58,10 @@ export const AccordionMenu = () => {
           <TouchableOpacity
             key={operation.id}
             className="py-2 flex flex-row"
-            onPress={() => navigate(operation.path)}
+            onPress={() => {
+              navigate(operation.path);
+              console.log('Navigating to:', operation.path);
+            }}
           >
             <Ionicons
               name={operation.icon}

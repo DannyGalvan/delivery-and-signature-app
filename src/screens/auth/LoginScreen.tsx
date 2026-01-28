@@ -95,7 +95,7 @@ export const LoginScreen = () => {
         value={form.userName}
         onChangeText={(text: string) => handleChange('userName', text)}
         placeholder="Ingrese su nombre de usuario"
-        icon="people"
+        icon="people-circle"
         iconColor={appColors.sky}
         secureTextEntry={false}
       />

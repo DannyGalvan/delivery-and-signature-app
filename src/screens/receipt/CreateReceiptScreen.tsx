@@ -47,17 +47,23 @@ export const CreateReceiptScreen = ({
 
       Alert.alert('Guardado', response.message);
     } else {
-      const response = saveSignature(signature);
+      const response = await saveSignature(signature);
 
-      if (!response) {
-        Alert.alert('Error', 'No se pudo guardar la firma');
+      if (!response.success) {
+        Alert.alert('Error', response.message);
         return;
       }
 
-      Alert.alert('Guardado', 'Firma guardada correctamente');
+      Alert.alert('Guardado', response.message, [
+        {
+          text: 'OK',
+          onPress: () => {
+            toggle();
+            navigation.goBack();
+          },
+        },
+      ]);
     }
-
-    navigation.navigate('list');
   };
 
   return (

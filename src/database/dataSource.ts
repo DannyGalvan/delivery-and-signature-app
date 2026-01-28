@@ -11,7 +11,7 @@ export const dataSource = new DataSource({
   entities: [SessionStorage, Order, OrderDetail, Signature],
   location: '.',
   logging: ['error', 'log', 'schema', 'warn'],
-  synchronize: true,
+  synchronize: false,
   logger: 'advanced-console',
   type: 'react-native',
   driver: typeORMDriver,
